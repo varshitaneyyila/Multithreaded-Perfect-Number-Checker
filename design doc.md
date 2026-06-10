@@ -1,0 +1,279 @@
+                           DESIGN DOCUMENT 
+          Multithreaded Perfect Number Checker using C (Pthreads)
+
+1. Introduction 
+A perfect number is a positive integer equal to the sum of its proper divisors (excluding 
+itself). 
+Examples: 
+● 6 → 1 + 2 + 3 = 6 
+● 28 → 1 + 2 + 4 + 7 + 14 = 28 
+Checking perfect numbers for large values can be computationally expensive. 
+To improve performance, multithreading is used to divide the work among multiple 
+threads. 
+This program is implemented in C using POSIX threads (pthreads). 
+It demonstrates concepts like: 
+● Parallel processing 
+● Thread creation and management 
+● Synchronization using mutex 
+
+2. Problem Statement 
+Develop a multithreaded C program to check whether a number N is a perfect number. 
+Accept two command-line inputs: 
+● N → number to be checked 
+● P → number of threads 
+Divide the range of numbers (1 to √N) among P threads. 
+      Each thread: 
+● Checks if numbers in its range are factors of N 
+● Adds valid factors to a shared array 
+Use mutex synchronization to prevent race conditions while accessing shared data. 
+After all threads complete execution: 
+● Compute the sum of all factors (excluding N) 
+● Compare the sum with N 
+Output whether N is a perfect number or not. 
+
+
+3. Input and Output 
+Input: 
+The program takes input via command-line arguments: 
+● N: Integer to be checked 
+● P: Number of threads 
+Output: 
+● Prints the sum of factors 
+● Displays whether the number is: 
+○ PERFECT 
+○ NOT perfect 
+Example 
+Input: 
+./a.out 28 4 
+Output: 
+28 is a PERFECT number
+
+
+4. System Overview 
+The system follows a parallel processing model: 
+1. The main thread reads input values N and P 
+2. It calculates the range [1, sqrt(N)] 
+3. This range is divided among P threads 
+4. Each thread: 
+○ Checks if numbers in its range divide N 
+○ Stores valid factors in a shared array 
+5. A mutex ensures safe access to shared memory 
+6. The main thread waits for all threads to finish 
+7. It computes the sum of collected factors 
+8. The result is displayed. 
+
+
+5. Architecture Design 
+Components 
+1. Main Thread 
+○ Input handling 
+○ Thread creation 
+○ Result computation 
+2. Worker Threads 
+○ Perform factor checking 
+○ Update shared buffer 
+3. Shared Memory 
+○ Array storing factors 
+4. Synchronization Mechanism 
+○ Mutex lock to avoid race conditions 
+Architecture Flow 
+User Input → Main Thread 
+            ↓ 
+    Divide Work (1 to √N) 
+            ↓ 
+    Create P Threads 
+            ↓ 
+    Threads Compute Factors 
+            ↓ 
+    Shared Buffer (Protected by Mutex) 
+            ↓ 
+    Main Thread Joins Threads 
+            ↓ 
+    Compute Sum 
+            ↓ 
+    Print Result 
+
+
+
+6. Data Structures 
+Global Variables 
+long long N; 
+int P; 
+long long factors[MAX]; 
+int count = 0; 
+● factors[]: Stores all divisors 
+● count: Keeps track of number of elements 
+Thread Data Structure 
+typedef struct { 
+long long start; 
+long long end; 
+} ThreadData; 
+Each thread operates within a specific range. 
+
+
+7. Thread Partitioning Strategy 
+To improve efficiency, the program only checks up to: sqrt(N) 
+Steps: 
+1. Compute: 
+limit = sqrt(N); 
+2. Divide into equal parts: 
+range = limit / P; 
+3. Assign each thread: 
+○ Start index 
+○ End index 
+Example 
+If N = 36, √N = 6, P = 3: 
+● Thread 1 → [1–2] 
+● Thread 2 → [3–4] 
+● Thread 3 → [5–6] 
+
+
+8. Synchronization 
+Since multiple threads access shared data (factors[] and count), synchronization is 
+necessary to: 
+● Prevent race conditions 
+● Ensure correct updates 
+● Maintain data consistency 
+Solution: 
+● Use mutex to ensure only one thread accesses critical section at a time 
+
+
+9. Mutex Implementation 
+Mutex Definition: 
+pthread_mutex_t lock; 
+Initialization: 
+pthread_mutex_init(&lock, NULL); 
+Usage in Thread Function: 
+// While adding factor i 
+pthread_mutex_lock(&lock); 
+if (count < MAX) 
+factors[count++] = i; 
+pthread_mutex_unlock(&lock); 
+// While adding paired factor (N / i) 
+pthread_mutex_lock(&lock); 
+if (count < MAX) 
+factors[count++] = pair; 
+pthread_mutex_unlock(&lock); 
+Destruction: 
+pthread_mutex_destroy(&lock); 
+Purpose: 
+● Ensures only one thread accesses shared variables at a time 
+● Protects shared buffer (factors[]) and count variable 
+● Prevents race conditions during insertion 
+● Maintains correctness of stored factors 
+
+
+10. Algorithm 
+Thread Function (find_factors) 
+For each number i in the assigned range [start, end]: 
+If N % i == 0: 
+// Add i (if it is not N itself) 
+If i != N: 
+Lock the mutex 
+If count < MAX: 
+factors[count] = i 
+count = count + 1 
+Unlock the mutex 
+// Find paired factor 
+pair = N / i 
+// Add pair if it is different from i and not equal to N 
+If pair != i AND pair != N: 
+Lock the mutex 
+If count < MAX: 
+factors[count] = pair 
+count = count + 1 
+Unlock the mutex 
+Step-by-Step: 
+Main Algorithm: 
+1. Read command-line arguments N and P 
+2. Validate inputs: 
+If N <= 1 or P <= 0 → print error and exit 
+3. Compute: 
+limit = sqrt(N) 
+4. If P > limit: 
+Set P = limit 
+5. Allocate memory for: 
+threads array 
+ThreadData array 
+6. Initialize mutex 
+7. Divide range [1, limit] among P threads: 
+Thread i handles: 
+start = i * limit / P + 1 
+end   = (i + 1) * limit / P 
+8. Create P threads: 
+Each thread executes find_factors() 
+9. Wait for all threads using pthread_join() 
+10. Compute sum of factors: 
+sum = 0 
+For i from 0 to count-1: 
+sum += factors[i] 
+11. If sum == N: 
+Print "PERFECT number" 
+Else: 
+Print "NOT a perfect number" 
+12. Destroy mutex 
+13. Free allocated memory 
+14. Exit program 
+
+
+11. Optimization 
+Square Root Optimization: 
+Instead of checking all numbers up to N, only check up to √N 
+Factor Pairing: 
+If i divides N, then: 
+● i and N/i are both factors 
+This reduces computation significantly. 
+
+
+12. Time Complexity 
+● Without optimization: O(N) 
+● With optimization: O(√N) 
+● With multithreading: O(√N / P) 
+
+
+13. Space Complexity 
+● Factors array: O(MAX) (fixed size array) 
+● Thread storage: O(P) 
+Overall: O(MAX + P) 
+
+
+14. Sample Execution 
+Case 1: 
+Input: 
+./a.out 6 2 
+Output: 
+6 is a PERFECT number 
+Case 2: 
+Input: 
+./a.out 15 3 
+Output: 
+15 is NOT a perfect number 
+
+
+15. Compilation and Execution 
+Compile 
+gcc B241352CS_A2.c -o perfect -lpthread -lm 
+Run 
+./perfect 28 4
+
+16. Advantages 
+● Faster than single-threaded approach 
+● Efficient use of CPU cores 
+● Reduced execution time 
+● Scalable with more threads 
+● Uses optimized factor search 
+
+
+17. Limitations 
+● Fixed-size array may overflow for large inputs 
+● Duplicate factors may be stored 
+● Thread creation overhead 
+
+
+18. Conclusion 
+This implementation successfully demonstrates: 
+● Multithreading using pthreads 
+● Synchronization using mutex 
+● Efficient computation using square root optimization 
+The program correctly determines whether a number is perfect while ensuring thread 
+safety and improved performance.
