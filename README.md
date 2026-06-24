@@ -14,12 +14,14 @@
 ---
 
 3.COMPILATION
+
   Use the following command to compile the program:
   gcc B241352CS_A2.c -o perfect -lpthread -lm
 
 ---
 
 4. EXECUTION
+
 Run the program using:
 ./perfect <N> <P>
 Where:
