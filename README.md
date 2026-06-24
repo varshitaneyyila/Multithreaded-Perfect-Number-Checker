@@ -14,8 +14,8 @@
 ---
 
 3.COMPILATION
-Use the following command to compile the program:
-gcc B241352CS_A2.c -o perfect -lpthread -lm
+  Use the following command to compile the program:
+  gcc B241352CS_A2.c -o perfect -lpthread -lm
 
 ---
 
