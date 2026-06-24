@@ -13,7 +13,7 @@
 
 ---
 
-3.COMPILATION
+3. COMPILATION
 
   Use the following command to compile the program:
   gcc B241352CS_A2.c -o perfect -lpthread -lm
@@ -22,26 +22,26 @@
 
 4. EXECUTION
 
-Run the program using:
-./perfect <N> <P>
-Where:
-N → Number to check
-P → Number of threads
+  Run the program using:
+  ./perfect <N> <P>
+  Where:
+  N → Number to check
+  P → Number of threads
 
 ---
 
 5. EXAMPLE RUNS
-5.1. Example 1 (Perfect Number):
-./perfect 28 4
+   5.1. Example 1 (Perfect Number):
+   ./perfect 28 4
 
-Output:
-28 is a PERFECT number
+    Output:
+    28 is a PERFECT number
 
-5.2. Example 2 (Not a Perfect Number):
-./perfect 10 3
+   5.2. Example 2 (Not a Perfect Number):
+   ./perfect 10 3
 
-Output:
-10 is NOT a perfect number
+   Output:
+   10 is NOT a perfect number
 
 ---
 
