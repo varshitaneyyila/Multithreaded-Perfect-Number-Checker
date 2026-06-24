@@ -46,6 +46,7 @@
 ---
 
 6. PROGRAM LOGIC
+   
 1. The program reads two command-line arguments:
      N → the number to be checked
      P → the number of threads
