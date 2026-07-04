@@ -22,11 +22,11 @@
 
 4. EXECUTION
 
-  Run the program using:
-  ./perfect <N> <P>
-  Where:
-  N → Number to check
-  P → Number of threads
+   Run the program using:
+   ./perfect <N> <P>
+   Where:
+   N → Number to check
+   P → Number of threads
 
 ---
 
