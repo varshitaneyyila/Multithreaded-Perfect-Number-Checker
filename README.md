@@ -32,7 +32,7 @@
 
 5. EXAMPLE RUNS
     5.1. Example 1 (Perfect Number):
-   ./perfect 28 4
+    ./perfect 28 4
 
     Output:
     28 is a PERFECT number
