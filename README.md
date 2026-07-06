@@ -31,17 +31,18 @@
 ---
 
 5. EXAMPLE RUNS
+   
     5.1. Example 1 (Perfect Number):
     ./perfect 28 4
 
     Output:
     28 is a PERFECT number
 
-   5.2. Example 2 (Not a Perfect Number):
-   ./perfect 10 3
+    5.2. Example 2 (Not a Perfect Number):
+    ./perfect 10 3
 
-   Output:
-   10 is NOT a perfect number
+    Output:
+    10 is NOT a perfect number
 
 ---
 
