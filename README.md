@@ -48,15 +48,15 @@
 
 6. PROGRAM LOGIC
    
-1. The program reads two command-line arguments:
+   The program reads two command-line arguments:
      N → the number to be checked
      P → the number of threads
-2. The inputs are validated:
+   The inputs are validated:
      If N ≤ 1 or P ≤ 0, the program prints "Invalid input" and exits.
-3. The program computes the limit as:
+   The program computes the limit as:
      limit = √N
      This reduces the search space for finding factors.
-4. If the number of threads P is greater than limit,
+   If the number of threads P is greater than limit,
      it is adjusted to P = limit to avoid unnecessary threads.
 5. Memory is allocated for:
      - An array of P threads
