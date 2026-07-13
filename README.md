@@ -6,7 +6,7 @@
 
 ---
 
-2. REQUIREMENTS
+ REQUIREMENTS
 * GCC Compiler
 * POSIX Threads Library (pthread)
 * Linux / Unix environment or Windows with MinGW/WSL support
