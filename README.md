@@ -74,7 +74,7 @@
       - Unlocks the mutex
     d) Computes the paired factor:
        pair = N / i
-   e) If pair ≠ i and pair ≠ N:
+    e) If pair ≠ i and pair ≠ N:
       - The thread locks the mutex
       - Adds pair to the shared array factors[]
       - Increments count
