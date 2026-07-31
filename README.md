@@ -58,12 +58,12 @@
      This reduces the search space for finding factors.
    If the number of threads P is greater than limit,
      it is adjusted to P = limit to avoid unnecessary threads.
-5. Memory is allocated for:
+   Memory is allocated for:
      - An array of P threads
      - An array of ThreadData structures (to store start and end range)
-6. The range [1, √N] is divided among P threads such that:
+   The range [1, √N] is divided among P threads such that:
      Each thread gets a unique subrange with no overlap.
-7. Each thread performs the following steps:
+   Each thread performs the following steps:
     a) Iterates through its assigned range [start, end]
     b) For each number i:
        - If N % i == 0, then i is a factor
@@ -79,7 +79,7 @@
       - Adds pair to the shared array factors[]
       - Increments count
       - Unlocks the mutex
-8. The main thread waits for all threads to complete execution
+   The main thread waits for all threads to complete execution
     using pthread_join().
 9. After all threads finish, the main thread computes the sum:
     sum = sum of all elements in factors[]
