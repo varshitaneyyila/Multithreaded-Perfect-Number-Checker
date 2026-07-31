@@ -82,15 +82,15 @@
    The main thread waits for all threads to complete execution
     using pthread_join().
    After all threads finish, the main thread computes the sum:
-    sum = sum of all elements in factors[]
+     sum = sum of all elements in factors[]
    The result is determined:
-    - If sum == N → the number is PERFECT
-    - Otherwise → the number is NOT a perfect number
+     - If sum == N → the number is PERFECT
+     - Otherwise → the number is NOT a perfect number
    The result is printed to the output.
    Finally:
-    - The mutex is destroyed
-    - Allocated memory is freed
-    - The program terminates
+     - The mutex is destroyed
+     - Allocated memory is freed
+     - The program terminates
 
 ---
 
