@@ -81,13 +81,13 @@
       - Unlocks the mutex
    The main thread waits for all threads to complete execution
     using pthread_join().
-9. After all threads finish, the main thread computes the sum:
+   After all threads finish, the main thread computes the sum:
     sum = sum of all elements in factors[]
-10. The result is determined:
+   The result is determined:
     - If sum == N → the number is PERFECT
     - Otherwise → the number is NOT a perfect number
-11. The result is printed to the output.
-12. Finally:
+   The result is printed to the output.
+   Finally:
     - The mutex is destroyed
     - Allocated memory is freed
     - The program terminates
