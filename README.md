@@ -68,29 +68,29 @@
     b) For each number i:
        - If N % i == 0, then i is a factor
     c) If i is a valid factor and i ≠ N:
-      - The thread locks the mutex
-      - Adds i to the shared array factors[]
-      - Increments count
-      - Unlocks the mutex
+       - The thread locks the mutex
+       - Adds i to the shared array factors[]
+       - Increments count
+       - Unlocks the mutex
     d) Computes the paired factor:
        pair = N / i
     e) If pair ≠ i and pair ≠ N:
-      - The thread locks the mutex
-      - Adds pair to the shared array factors[]
-      - Increments count
-      - Unlocks the mutex
+       - The thread locks the mutex
+       - Adds pair to the shared array factors[]
+       - Increments count
+       - Unlocks the mutex
    The main thread waits for all threads to complete execution
     using pthread_join().
    After all threads finish, the main thread computes the sum:
      sum = sum of all elements in factors[]
    The result is determined:
-     - If sum == N → the number is PERFECT
-     - Otherwise → the number is NOT a perfect number
+       - If sum == N → the number is PERFECT
+       - Otherwise → the number is NOT a perfect number
    The result is printed to the output.
    Finally:
-     - The mutex is destroyed
-     - Allocated memory is freed
-     - The program terminates
+       - The mutex is destroyed
+       - Allocated memory is freed
+       - The program terminates
 
 ---
 
