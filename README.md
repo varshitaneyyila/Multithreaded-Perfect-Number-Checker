@@ -74,7 +74,7 @@
    Each thread performs the following steps:
     a) Iterates through its assigned range [start, end]
     b) For each number i:
-       - If N % i == 0, then i is a factor
+   - If N % i == 0, then i is a factor
     c) If i is a valid factor and i ≠ N:
        - The thread locks the mutex
        - Adds i to the shared array factors[]
